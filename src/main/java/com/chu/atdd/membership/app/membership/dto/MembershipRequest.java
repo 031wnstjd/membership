@@ -1,5 +1,6 @@
-package com.chu.atdd.membership;
+package com.chu.atdd.membership.app.membership.dto;
 
+import com.chu.atdd.membership.app.enums.MembershipType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

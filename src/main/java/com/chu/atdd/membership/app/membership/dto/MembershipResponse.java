@@ -1,5 +1,6 @@
-package com.chu.atdd.membership;
+package com.chu.atdd.membership.app.membership.dto;
 
+import com.chu.atdd.membership.app.enums.MembershipType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

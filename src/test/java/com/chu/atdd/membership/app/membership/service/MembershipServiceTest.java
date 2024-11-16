@@ -1,11 +1,15 @@
-package com.chu.atdd.membership;
+package com.chu.atdd.membership.app.membership.service;
 
-import org.junit.jupiter.api.Assertions;
+import com.chu.atdd.membership.exception.MembershipException;
+import com.chu.atdd.membership.app.enums.MembershipType;
+import com.chu.atdd.membership.app.membership.dto.MembershipResponse;
+import com.chu.atdd.membership.app.membership.entity.Membership;
+import com.chu.atdd.membership.app.membership.repository.MembershipRepository;
+import com.chu.atdd.membership.exception.MembershipErrorResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.*;

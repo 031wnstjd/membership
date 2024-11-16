@@ -1,5 +1,8 @@
-package com.chu.atdd.membership;
+package com.chu.atdd.membership.app.membership.controller;
 
+import com.chu.atdd.membership.app.membership.dto.MembershipRequest;
+import com.chu.atdd.membership.app.membership.dto.MembershipResponse;
+import com.chu.atdd.membership.app.membership.service.MembershipService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.chu.atdd.membership.MembershipConstants.*;
+import static com.chu.atdd.membership.app.membership.constants.MembershipConstants.*;
 
 @RestController
 @RequiredArgsConstructor

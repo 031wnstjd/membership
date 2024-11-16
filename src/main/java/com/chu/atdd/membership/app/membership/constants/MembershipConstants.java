@@ -1,4 +1,4 @@
-package com.chu.atdd.membership;
+package com.chu.atdd.membership.app.membership.constants;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

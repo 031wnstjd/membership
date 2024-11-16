@@ -1,5 +1,7 @@
-package com.chu.atdd.membership;
+package com.chu.atdd.membership.app.membership.repository;
 
+import com.chu.atdd.membership.app.enums.MembershipType;
+import com.chu.atdd.membership.app.membership.entity.Membership;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
