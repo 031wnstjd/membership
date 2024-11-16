@@ -1,5 +1,7 @@
-package com.chu.atdd.membership;
+package com.chu.atdd.membership.app.common;
 
+import com.chu.atdd.membership.exception.MembershipErrorResult;
+import com.chu.atdd.membership.exception.MembershipException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

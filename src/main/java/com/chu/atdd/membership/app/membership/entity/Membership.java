@@ -1,5 +1,6 @@
-package com.chu.atdd.membership;
+package com.chu.atdd.membership.app.membership.entity;
 
+import com.chu.atdd.membership.app.enums.MembershipType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

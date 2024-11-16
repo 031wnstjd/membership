@@ -1,12 +1,20 @@
-package com.chu.atdd.membership;
+package com.chu.atdd.membership.app.membership.service;
 
-import org.junit.jupiter.api.Assertions;
+import com.chu.atdd.membership.app.membership.dto.MembershipDetailResponse;
+import com.chu.atdd.membership.exception.MembershipException;
+import com.chu.atdd.membership.app.enums.MembershipType;
+import com.chu.atdd.membership.app.membership.dto.MembershipAddResponse;
+import com.chu.atdd.membership.app.membership.entity.Membership;
+import com.chu.atdd.membership.app.membership.repository.MembershipRepository;
+import com.chu.atdd.membership.exception.MembershipErrorResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,7 +53,7 @@ public class MembershipServiceTest {
         doReturn(membership()).when(membershipRepository).save(any(Membership.class));
 
         // when
-        final MembershipResponse result = target.addMembership(userId, membershipType, point);
+        final MembershipAddResponse result = target.addMembership(userId, membershipType, point);
 
         // then
         assertThat(result.getId()).isNotNull();
@@ -63,5 +71,21 @@ public class MembershipServiceTest {
                 .point(point)
                 .membershipType(MembershipType.NAVER)
                 .build();
+    }
+
+    @Test
+    void 멤버십목록조회() {
+        // given
+        doReturn(Arrays.asList(
+                    Membership.builder().build(),
+                    Membership.builder().build(),
+                    Membership.builder().build()
+        )).when(membershipRepository).findAllByUserId(userId);
+
+        // when
+        final List<MembershipDetailResponse> result = target.getMembershipList(userId);
+
+        // then
+        assertThat(result.size()).isEqualTo(3);
     }
 }

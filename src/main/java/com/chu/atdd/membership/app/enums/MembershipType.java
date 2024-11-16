@@ -1,4 +1,4 @@
-package com.chu.atdd.membership;
+package com.chu.atdd.membership.app.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

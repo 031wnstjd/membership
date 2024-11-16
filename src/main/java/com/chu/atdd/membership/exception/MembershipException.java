@@ -1,4 +1,4 @@
-package com.chu.atdd.membership;
+package com.chu.atdd.membership.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
