@@ -4,7 +4,7 @@ import com.chu.atdd.membership.exception.MembershipException;
 import com.chu.atdd.membership.app.common.GlobalExceptionHandler;
 import com.chu.atdd.membership.app.enums.MembershipType;
 import com.chu.atdd.membership.app.membership.dto.MembershipRequest;
-import com.chu.atdd.membership.app.membership.dto.MembershipResponse;
+import com.chu.atdd.membership.app.membership.dto.MembershipAddResponse;
 import com.chu.atdd.membership.app.membership.service.MembershipService;
 import com.chu.atdd.membership.exception.MembershipErrorResult;
 import com.google.gson.Gson;
@@ -120,12 +120,12 @@ public class MembershipControllerTest {
     void 멤버십등록성공() throws Exception {
         // given
         final String url = "/api/v1/memberships";
-        final MembershipResponse membershipResponse = MembershipResponse.builder()
+        final MembershipAddResponse membershipAddResponse = MembershipAddResponse.builder()
                 .id(-1L)
                 .membershipType(MembershipType.NAVER)
                 .build();
 
-        doReturn(membershipResponse).when(membershipService).addMembership("12345", MembershipType.NAVER, 10000);
+        doReturn(membershipAddResponse).when(membershipService).addMembership("12345", MembershipType.NAVER, 10000);
 
         // when
         final ResultActions resultActions = mockMvc.perform(
@@ -138,9 +138,9 @@ public class MembershipControllerTest {
         // then
         resultActions.andExpect(status().isCreated());
 
-        final MembershipResponse response = gson.fromJson(resultActions.andReturn()
+        final MembershipAddResponse response = gson.fromJson(resultActions.andReturn()
                 .getResponse()
-                .getContentAsString(StandardCharsets.UTF_8), MembershipResponse.class);
+                .getContentAsString(StandardCharsets.UTF_8), MembershipAddResponse.class);
 
         assertThat(response.getMembershipType()).isEqualTo(MembershipType.NAVER);
         assertThat(response.getId()).isNotNull();
