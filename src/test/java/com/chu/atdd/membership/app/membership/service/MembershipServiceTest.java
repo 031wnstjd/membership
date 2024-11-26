@@ -162,4 +162,39 @@ public class MembershipServiceTest {
 
         // then
     }
+
+    @Test
+    void 멤버십적립실패_존재하지않음() {
+        // given
+        doReturn(Optional.empty()).when(membershipRepository).findById(membershipId);
+
+        // when
+        final MembershipException result = assertThrows(MembershipException.class, () -> target.accumulateMembershipPoint(membershipId, userId, 10000));
+
+        // then
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.MEMBERSHIP_NOT_FOUND);
+    }
+
+    @Test
+    void 멤버십적립실패_본인이아님() {
+        // given
+        doReturn(Optional.of(membership())).when(membershipRepository).findById(membershipId);
+
+        // when
+        final MembershipException result = assertThrows(MembershipException.class, () -> target.accumulateMembershipPoint(membershipId, "notowner", 10000));
+
+        // then
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
+    }
+
+    @Test
+    void 멤버십적립성공() {
+        // given
+        doReturn(Optional.of(membership())).when(membershipRepository).findById(membershipId);
+
+        // when
+        target.accumulateMembershipPoint(membershipId, userId, 10000);
+
+        // then
+    }
 }
