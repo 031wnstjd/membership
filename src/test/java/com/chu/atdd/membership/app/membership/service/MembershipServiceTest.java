@@ -1,12 +1,12 @@
 package com.chu.atdd.membership.app.membership.service;
 
-import com.chu.atdd.membership.app.membership.dto.MembershipDetailResponse;
-import com.chu.atdd.membership.exception.MembershipException;
 import com.chu.atdd.membership.app.enums.MembershipType;
 import com.chu.atdd.membership.app.membership.dto.MembershipAddResponse;
+import com.chu.atdd.membership.app.membership.dto.MembershipDetailResponse;
 import com.chu.atdd.membership.app.membership.entity.Membership;
 import com.chu.atdd.membership.app.membership.repository.MembershipRepository;
 import com.chu.atdd.membership.exception.MembershipErrorResult;
+import com.chu.atdd.membership.exception.MembershipException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,11 +17,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 public class MembershipServiceTest {
@@ -70,9 +69,9 @@ public class MembershipServiceTest {
     void 멤버십목록조회() {
         // given
         doReturn(Arrays.asList(
-                    Membership.builder().build(),
-                    Membership.builder().build(),
-                    Membership.builder().build()
+                Membership.builder().build(),
+                Membership.builder().build(),
+                Membership.builder().build()
         )).when(membershipRepository).findAllByUserId(userId);
 
         // when
@@ -126,5 +125,41 @@ public class MembershipServiceTest {
                 .point(point)
                 .membershipType(MembershipType.NAVER)
                 .build();
+    }
+
+    @Test
+    void 멤버십삭제실패_존재하지않음() {
+        // given
+        doReturn(Optional.empty()).when(membershipRepository).findById(membershipId);
+
+        // when
+        final MembershipException result = assertThrows(MembershipException.class, () -> target.removeMembership(membershipId, userId));
+
+        // then
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.MEMBERSHIP_NOT_FOUND);
+    }
+
+    @Test
+    void 멤버십삭제실패_본인이아님() {
+        // given
+        doReturn(Optional.of(membership())).when(membershipRepository).findById(membershipId);
+
+        // when
+        final MembershipException result = assertThrows(MembershipException.class, () -> target.removeMembership(membershipId, "notowner"));
+
+        // then
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
+    }
+
+    @Test
+    void 멤버십삭제성공() {
+        // given
+        final Membership membership = membership();
+        doReturn(Optional.of(membership)).when(membershipRepository).findById(membershipId);
+
+        // when
+        target.removeMembership(membershipId, userId);
+
+        // then
     }
 }

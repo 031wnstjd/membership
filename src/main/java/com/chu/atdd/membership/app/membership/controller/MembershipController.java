@@ -22,8 +22,8 @@ public class MembershipController {
 
     @PostMapping("/api/v1/memberships")
     public ResponseEntity<MembershipAddResponse> addMembership(
-        @RequestHeader(USER_ID_HEADER) final String userId,
-        @RequestBody @Valid final MembershipRequest membershipRequest) {
+            @RequestHeader(USER_ID_HEADER) final String userId,
+            @RequestBody @Valid final MembershipRequest membershipRequest) {
 
         final MembershipAddResponse membershipAddResponse = membershipService.addMembership(userId, membershipRequest.getMembershipType(), membershipRequest.getPoint());
 
@@ -44,5 +44,14 @@ public class MembershipController {
             @PathVariable final Long id
     ) {
         return ResponseEntity.ok(membershipService.getMembership(id, userId));
+    }
+
+    @DeleteMapping("/api/v1/memberships/{id}")
+    public ResponseEntity<MembershipDetailResponse> deleteMembership(
+            @RequestHeader(USER_ID_HEADER) final String userId,
+            @PathVariable final Long id) {
+
+        membershipService.removeMembership(id, userId);
+        return ResponseEntity.noContent().build();
     }
 }
